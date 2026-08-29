@@ -1,0 +1,164 @@
+ANALISIS DEL PROBLEMA
+La taquería “Chava” es un negocio personal (de lona y 2 trabajadores), el área del problema es que ambas personas preparan los tacos y luego se llena mucho de gente y no hay quien pueda tomar la orden, también al momento de cobrar la gente miente en las ordenes 
+El negocio necesita automatizar lar órdenes para evitar errores de memoria cuando haya pedidos grandes y poder calcular bien las cuentas para evitar pérdidas por cobros incompleto o mal calculados 
+DEFINICION DEL PROBLEMA 
+1.	El problema de no tener quien este dedicado a los pedidos especialmente es hacerlos con la memoria y que tarde o temprano generara una confusión de ordenes y/o problemas de cuentas al cobrar, ya que unos clientes niegan mienten en su consumo 
+2.	Reglas del negocio:
+•	Los tacos tienen el mismo precio($25), pero deberá especificar de que carne quiere ya que no hay cambios una vez se tome la orden
+•	Los pedidos se deben especificar si son para llevar o consumir en el negocio 
+•	Los aditamentos (verdura y salsa), deben especificar con cuales quieren  
+•	Los refrescos tienen el mismo precio $20 ya sea desechable o cristal 
+•	Si se llevan refresco de cristal, tendrán que dejar un importe de $12 por envase 
+Listado de Requerimientos 
+1.	Registra a que nombre saldrá el pedido 
+2.	Mostrar los tipos de tacos que hay 
+3.	Registrar cuantos y que tipo de taco desea 
+4.	Mostrar si el consumo será para llevar o comer ahí
+5.	Registrar donde se consumirá 
+6.	Mostrar que tipo de aditamentos deseara (cilantro, cebolla cruda, cebolla cocida, salsa verde o roja)
+7.	Registrar cuales deseara y cuales no
+8.	Mostar si desea complementar con alguna bebida (también se mostrará el importe que se deberá dejar en caso de que se lleve el envase)
+9.	Registrar si desea bebida 
+10.	Calcula todo, muestra el resumen del pedido y también marca la suma total de la cuenta 
+11.	Repite el proceso con los clientes que lleguen 
+12.	Al cerrar el día, muestra el resumen de ventas (número de clientes y total de consumo 
+
+
+
+Pseudocódigo 
+Algoritmo TAQUERIA_CHAVA
+
+	// Precios y datos iniciales
+	Precio_tacos = 25
+	Precio_refrescos = 20
+	Importe_cristal = 12
+
+	// Acumuladores para el corte
+	totalClientes = 0
+	totalVentasDia = 0
+	totalTacosVendidos = 0
+
+	Repetir
+		Escribir "------- TAQUERIA CHAVA -----"
+		Escribir "1. Pedido nuevo"
+		Escribir "2. Corte del día"
+		Escribir "3. Salir"
+		Escribir "Seleccione una opción:"
+		Leer opcion
+
+		Si opcion = 1 Entonces
+			tacosBis = 0
+			tacosLong = 0
+			tacosCos = 0
+			tacosChu = 0
+			tacosAdo = 0
+			tacosCam = 0
+			subtotalBeb = 0
+			subtotalImporte = 0
+
+			Escribir "--pedido nuevo--"
+			Escribir "nombre del cliente:"
+			Leer nombre_cliente
+
+			Escribir "Tipos de tacos disponibles (Precio: $", Precio_tacos, ")"
+			Escribir "Tacos de bistec:"
+			Leer tacosBis
+			Escribir "Tacos de longaniza:"
+			Leer tacosLong
+			Escribir "Tacos de costilla:"
+			Leer tacosCos
+			Escribir "Tacos de chuleta:"
+			Leer tacosChu
+			Escribir "Tacos de adobado:"
+			Leer tacosAdo
+			Escribir "Tacos campechanos:"
+			Leer tacosCam
+
+			Cantidad_Tacos = tacosBis + tacosLong + tacosCos + tacosChu + tacosAdo + tacosCam
+			Total_tacos = Cantidad_Tacos * Precio_tacos
+
+			Escribir "los tacos son para comer aquí o para llevar"
+			Escribir "1. Comer aquí"
+			Escribir "2. Para llevar"
+			Escribir "Seleccione una opción:"
+			Leer lugar
+
+			Si lugar = 1 Entonces
+				Texlugar = "Comer aquí"
+			Sino
+				Texlugar = "Para llevar"
+			FinSi
+
+			Escribir "--Verdura--"
+			Escribir "Desea cilantro? (s/n):"
+			Leer cilantro
+			Escribir "Desea cebolla cruda? (s/n):"
+			Leer cebolla_cruda
+			Escribir "Desea cebolla cocida? (s/n):"
+			Leer cebolla_cocida
+			Escribir "Salsa de cual le gustaría? (verde/roja/sin salsa):"
+			Leer salsa
+
+			Escribir "Va a querer bebida? (s/n):"
+			Leer bebida
+
+			Si bebida = "s" O bebida = "S" Entonces
+				Escribir "Cuantos refrescos desea?:"
+				Leer cantBebidas
+				subtotalBeb = cantBebidas * Precio_refrescos
+
+				Escribir "Cuantos envases de cristal se lleva fuera del local?:"
+				Leer cantCristal
+				subtotalImporte = cantCristal * Importe_cristal
+			FinSi
+
+			Total_cuenta = Total_tacos + subtotalBeb + subtotalImporte
+			
+			Escribir "RESUMEN DE LA CUENTA"
+			Escribir "Cliente: ", nombre_cliente
+			Escribir "Servicio: ", Texlugar
+			Escribir "Total de tacos: ", Cantidad_Tacos, " (Total: $", Total_tacos")"
+			Si subtotalBeb > 0 Entonces
+				Escribir "Bebidas: $", subtotalBeb
+			FinSi
+			Si subtotalImporte > 0 Entonces
+				Escribir "Importe cristal: $", subtotalImporte
+			FinSi
+			Escribir "TOTAL A COBRAR: $", Total_cuenta
+
+			totalClientes = totalClientes + 1
+			totalVentasDia = totalVentasDia + Total_cuenta
+			totalTacosVendidos = totalTacosVendidos + Cantidad_Tacos
+
+		FinSi
+
+		Si opcion = 2 Entonces
+			
+			Escribir "-- CORTE DEL DÍA --"
+			Escribir "Clientes atendidos: ", totalClientes
+			Escribir "Tacos vendidos: ", totalTacosVendidos
+			Escribir "Suma total recaudada: $", totalVentasDia
+			
+		FinSi
+
+		Si opcion = 3 Entonces
+			Escribir "Saliendo del programa..."
+		FinSi
+
+	Hasta Que opcion = 3
+
+FinAlgoritmo
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+	
